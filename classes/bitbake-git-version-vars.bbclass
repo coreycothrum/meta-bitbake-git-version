@@ -2,7 +2,7 @@ BITBAKE_GIT_VER_TAG            ??= "rel-UNTAGGED"
 BITBAKE_GIT_VER_SHA            ??= "GIT_HASH_ERROR"
 BITBAKE_GIT_VER_SHA_SHORT      ??= "GIT_HASH_ERROR"
 
-BITBAKE_GIT_DESCRIBE_ARGS      ??= "--tags --always"
+BITBAKE_GIT_DESCRIBE_ARGS      ??= "--tags --always --dirty"
 
 BITBAKE_GIT_VER_RE_SUB_SEARCH  ??= ""
 BITBAKE_GIT_VER_RE_SUB_REPLACE ??= ""
