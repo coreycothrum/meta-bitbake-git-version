@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 SRCBRANCH        = "master"
 SRCREV           = "${AUTOREV}"
-SRC_URI          = "git://github.com/melloyawn/melloVIM.git;branch=${SRCBRANCH};protocol=https;"
+SRC_URI          = "git://github.com/coreycothrum/meta-bitbake-git-version.git;branch=${SRCBRANCH};protocol=https;"
 
 inherit bitbake-git-version
 
