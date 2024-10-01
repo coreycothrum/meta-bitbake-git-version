@@ -3,14 +3,6 @@ Provide GIT rev/tag info to a bitbake recipe.
 
 Some string manipulation (via regex) of the tag is available.
 
-## Overview
-The following variables are produced by this layer/class
-| Variable                      | Description                         |
-| ---                           | ---                                 |
-| ``BITBAKE_GIT_VER_TAG``       | GIT Tag, after any regex processing |
-| ``BITBAKE_GIT_VER_SHA``       | Full  GIT Hash                      |
-| ``BITBAKE_GIT_VER_SHA_SHORT`` | Short GIT HASH                      |
-
 ## Dependencies
 This layer depends on:
 
@@ -37,36 +29,30 @@ Alternatively, run bitbake-layers to add:
 
     $ bitbake-layers add-layer /path/to/yocto/meta-bitbake-git-version
 
-## Using Layer
-Add ``inherit bitbake-git-version`` to recipe.
+## Configuration
+### Variables
+| Variable                           | Defaults                    | Description                                                     |
+| ---                                | ---                         | ---                                                             |
+| ``BITBAKE_GIT_DESCRIBE_ARGS``      | ``--tags --always --dirty`` | arguments for ``git describe`` command                          |
+| ``BITBAKE_GIT_VER_RE_SUB_SEARCH``  | ````                        | regex pattern to replace, if any (blank = noop)                 |
+| ``BITBAKE_GIT_VER_RE_SUB_REPLACE`` | ````                        | replace found regex pattern with (blank = delete)               |
+| ``BITBAKE_GIT_VER_RE_SUB_COUNT``   | ``0``                       | max number of found instances to replace (0 = replace them all) |
+| ``BITBAKE_GIT_VER_RE_MATCH``       | ``.``                       | if found in tag string, only return matching portion            |
 
-Additional, optional, variables are provided to modify behavior:
+These are all optional. All the ``_RE_`` variables are hooks to manipulate the returned tag/rev.
 
-    ## all config variables are optional
-    ## default behavior is no REGEX manipulation
-    ## I.E. the tag is passed through as-is
+## Usage
+* Add ``inherit bitbake-git-version`` to the recipe(s).
+* Additional/optional set [configuration variables](#Variables).
 
-    ## additional arguments for 'git describe' command
-    BITBAKE_GIT_DESCRIBE_ARGS      = "--tags --always"
+The following variables are produced by this layer/class.
+| Variable                      | Description                         |
+| ---                           | ---                                 |
+| ``BITBAKE_GIT_VER_TAG``       | GIT Tag, after any regex processing |
+| ``BITBAKE_GIT_VER_SHA``       | Full  GIT Hash                      |
+| ``BITBAKE_GIT_VER_SHA_SHORT`` | Short GIT HASH                      |
 
-    ## re.sub arguments ##
-    ## regex pattern to sub(), if any (blank = noop)
-    BITBAKE_GIT_VER_RE_SUB_SEARCH  = ""
-    ## string to replace found sub pattern with (blank = delete sub string)
-    BITBAKE_GIT_VER_RE_SUB_REPLACE = ""
-    ## max number of found instances to replace, 0 = replace them all
-    BITBAKE_GIT_VER_RE_SUB_COUNT   = "0"
-
-    ## re.search arguments - performed after re.sub() ##
-    ## if found in tag string, only return matching portion
-    BITBAKE_GIT_VER_RE_MATCH       = ".*"
-
-## Contributing
-Please submit any patches against this layer via pull request.
-
-Commits must be signed off.
-
-Use [conventional commits](https://www.conventionalcommits.org/).
+These variables can be used inside other recipes to embedded git version information.
 
 ## Release Schedule and Roadmap
 This layer will remain compatible with the latest [YOCTO LTS](https://wiki.yoctoproject.org/wiki/Releases).
