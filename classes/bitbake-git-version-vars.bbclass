@@ -1,11 +1,23 @@
-BITBAKE_GIT_VER_TAG            ??= "rel-UNTAGGED"
-BITBAKE_GIT_VER_SHA            ??= "GIT_HASH_ERROR"
-BITBAKE_GIT_VER_SHA_SHORT      ??= "GIT_HASH_ERROR"
+BITBAKE_GIT_LAYER_SRC_PATH     ??= ""
+BITBAKE_GIT_LAYER_TAG          ??= "vERROR"
+BITBAKE_GIT_LAYER_SHA          ??= "GIT_HASH_ERROR"
+BITBAKE_GIT_LAYER_SHA_SHORT    ??= "GIT_HASH_ERROR"
+BITBAKE_GIT_LAYER_REVISION     ??= ""
 
+BITBAKE_GIT_RECIPE_SRC_PATH    ??= ""
+BITBAKE_GIT_RECIPE_TAG         ??= "vERROR"
+BITBAKE_GIT_RECIPE_SHA         ??= "GIT_HASH_ERROR"
+BITBAKE_GIT_RECIPE_SHA_SHORT   ??= "GIT_HASH_ERROR"
+BITBAKE_GIT_RECIPE_REVISION    ??= ""
+
+################################################################################
 BITBAKE_GIT_DESCRIBE_ARGS      ??= "--tags --always --dirty"
 
-BITBAKE_GIT_VER_RE_SUB_SEARCH  ??= ""
-BITBAKE_GIT_VER_RE_SUB_REPLACE ??= ""
-BITBAKE_GIT_VER_RE_SUB_COUNT   ??= "0"
+################################################################################
+BITBAKE_GIT_RECIPE_TAG_RE[delete]  ??= ""
+BITBAKE_GIT_RECIPE_TAG_RE[search]  ??= ""
+BITBAKE_GIT_RECIPE_TAG_RE[replace] ??= ""
+BITBAKE_GIT_RECIPE_TAG_RE[count]   ??= ""
+BITBAKE_GIT_RECIPE_TAG_RE[match]   ??= ".*"
 
-BITBAKE_GIT_VER_RE_MATCH       ??= ".*"
+BITBAKE_GIT_LAYER_TAG_RE[match]    ??= ".*"
