@@ -5,10 +5,49 @@
 # https://github.com/openembedded/meta-openembedded/blob/master/meta-oe/classes/gitpkgv.bbclass
 # https://github.com/openembedded/meta-openembedded/blob/master/meta-oe/classes/gitver.bbclass
 ################################################################################
-
 BITBAKE_GIT_VER_TAG       = "${@get_git_tag(d)}"
 BITBAKE_GIT_VER_SHA       = "${@get_git_hash(d)}"
 BITBAKE_GIT_VER_SHA_SHORT = "${@get_git_hash_short(d)}"
+
+################################################################################
+################################################################################
+################################################################################
+def get_layer_path(d):
+    import os
+    return next(filter(lambda x: (d.getVar("FILE_LAYERNAME") or "") == os.path.basename(x), (d.getVar("BBLAYERS") or "").split()))
+
+def get_layer_name(d):
+    import os
+    return os.path.basename(get_layer_path(d))
+
+def get_layer_branch(d):
+    return oe.buildcfg.get_metadata_git_branch(get_layer_path(d)).strip()
+
+def get_layer_is_modified(d):
+    return oe.buildcfg.is_layer_modified(get_layer_path(d))
+
+# short   : short vs full length rev hash
+# verbose : return formatted string w/ extra info (name, branch, etc)
+#
+# warning: verbose=True may return spaces, enclose in single quotes when using this option:
+#     e.g. : -DREV='${@get_layer_revision(d, True, True)}'
+#
+# reference:
+#     poky/meta/classes/image-buildinfo.bbclass : get_layer_revs(d):
+#     poky/meta/lib/oe/buildcfg.py              : get_layer_revisions(d)
+def get_layer_revision(d, short:bool=False, verbose:bool=False):
+    rev = oe.buildcfg.get_metadata_git_revision(get_layer_path(d))
+    rev = rev[:7] if short else rev
+    return ("%s = %s:%s%s" % (get_layer_name(d), get_layer_branch(d), rev, get_layer_is_modified(d))) if verbose else rev
+
+# same as oe.buildcfg.get_metadata_git_describe(path)
+# ...but using supplied BITBAKE_GIT_DESCRIBE_ARGS
+def get_layer_tag(d):
+    try:
+        describe,_ = bb.process.run(f'git describe {(d.getVar("BITBAKE_GIT_DESCRIBE_ARGS") or "")}', cwd=get_layer_path(d))
+    except bb.process.ExecutionError:
+        return "GIT_ERROR"
+    return describe.strip()
 
 ################################################################################
 def get_git_tag(d):
