@@ -86,5 +86,12 @@ Notes:
 | `BITBAKE_GIT_RECIPE_TAG_RE[match]`   | `.*`                      | regex pattern(s) to truncate to. A match will be extracted and the tag assigned to that value. No matches will return the full tag. Empty is a NOOP. |
 
 
+### Recipe Signature Dependency
+To ensure reliable triggering on revision changes, add `BITBAKE_GIT_*_REVISION` to applicable task(s) `[vardeps]`.
+e.g.:
+```
+do_configure[vardeps] += "BITBAKE_GIT_LAYER_REVISION BITBAKE_GIT_RECIPE_REVISION"
+```
+
 ## Release Schedule and Roadmap
 This layer will remain compatible with the latest [YOCTO LTS](https://wiki.yoctoproject.org/wiki/Releases).
