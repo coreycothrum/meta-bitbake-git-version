@@ -6,6 +6,8 @@
 #     https://github.com/yoctoproject/poky/blob/master/meta/lib/oe/buildcfg.py
 ################################################################################
 # fmt: off
+SSTATE_SKIP_CREATION         = "1"
+
 BITBAKE_GIT_LAYER_SRC_PATH   = "${@get_layer_src_path(d)}"
 BITBAKE_GIT_LAYER_TAG        = "${@do_re_processing(d, get_tag(d, '${BITBAKE_GIT_LAYER_SRC_PATH}'),  d.getVarFlags('BITBAKE_GIT_LAYER_TAG_RE'))}"
 BITBAKE_GIT_LAYER_SHA        = "${@get_revision(d,                '${BITBAKE_GIT_LAYER_SRC_PATH}', short=False)}"
@@ -16,11 +18,6 @@ BITBAKE_GIT_RECIPE_TAG       = "${@do_re_processing(d, get_tag(d, '${BITBAKE_GIT
 BITBAKE_GIT_RECIPE_SHA       = "${@get_revision(d,                '${BITBAKE_GIT_RECIPE_SRC_PATH}', short=False)}"
 BITBAKE_GIT_RECIPE_SHA_SHORT = "${@get_revision(d,                '${BITBAKE_GIT_RECIPE_SRC_PATH}', short=True)}"
 BITBAKE_GIT_RECIPE_REVISION  = "${@get_revision(d,                '${BITBAKE_GIT_RECIPE_SRC_PATH}', verbose=True)}"
-
-# ensure these are accurate (for [vardeps])
-BB_DONT_CACHE                            = "1"
-BITBAKE_GIT_LAYER_REVISION[vardepvalue]  = "${BITBAKE_GIT_LAYER_REVISION}"
-BITBAKE_GIT_RECIPE_REVISION[vardepvalue] = "${BITBAKE_GIT_RECIPE_REVISION}"
 # fmt: on
 
 
