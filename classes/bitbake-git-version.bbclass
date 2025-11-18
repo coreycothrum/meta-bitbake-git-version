@@ -95,11 +95,15 @@ def _do_fetch2_git_cmd(d, src_path: str, git_sub_cmd: str) -> str:
     work_dir = src_path
     git_dir = os.path.abspath(os.path.join(src_path, ".git"))
     if os.path.isdir(git_dir):
-        return bb.fetch2.runfetchcmd(
-            f"git --git-dir={git_dir} --work-tree={work_dir} {git_sub_cmd}",
-            d,
-            quiet=True,
-        ).strip()
+        from bb.fetch2 import FetchError
+        try:
+            return bb.fetch2.runfetchcmd(
+                f"git --git-dir={git_dir} --work-tree={work_dir} {git_sub_cmd}",
+                d,
+                quiet=True,
+            ).strip()
+        except FetchError:
+            pass
     return ""
 
 
